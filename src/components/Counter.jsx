@@ -1,23 +1,25 @@
 import React from "react";
-// import { Decrease, Increase, Reset } from "./buttons";
+import { Button } from "./Buttons/Button";
+import Input from "./Inputs/Inputs";
 
 export default class Counter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { counter: 0 };
+    this.state = { counter: 0, 
+      max: Number(localStorage.getItem("max")), 
+      min: Number(localStorage.getItem("min")),  
+      step: Number(localStorage.getItem("step")) };
   }
 
     increase = () => {
-        console.log("inc");
-      this.setState((state) => ({
-        counter: state.counter + 1,
+      this.setState(({counter, step}) => ({
+        counter: counter + step,
       }));
     };
 
     decrease = () => {
-        console.log("dec");
-      this.setState((state) => ({
-        counter: state.counter - 1,
+      this.setState(({counter, step}) => ({
+        counter: counter - step,
       }));
     };
 
@@ -26,16 +28,35 @@ export default class Counter extends React.Component {
       this.setState({ counter: 0 });
     };
 
+    maxVal=(event)=> {
+        this.setState({max: event.target.value});
+      }
+
+      minVal=(event)=> {
+        this.setState({min: event.target.value});
+      }
+
+      step=(event)=>{
+        this.setState({step: event.target.value})
+      }
+
   render() {
-    const { counter } = this.state;
+    const {counter, min, max, step} = this.state;
+    localStorage.setItem("max", max);
+    localStorage.setItem("min", min);
+    localStorage.setItem("step", step)
+
     return (
       <>
-        <p>{this.state.counter}</p>
-        <button onClick={this.increase}>Increase</button>
-        <button disabled={this.state.counter <= 0} onClick={this.decrease}>
-          Decrease
-        </button>
-        <button onClick={this.reset}>Reset</button>
+        <Input placeholder="Enter maximal value" value={max} onChange={this.maxVal}/>
+        <Input placeholder="Enter minimal value" value={min} onChange={this.minVal}/>
+        <Input placeholder="Step" value={step} onChange={this.step}/>
+
+        <p>{counter}</p>
+        <Button disable={max <= counter+step} name="Increase" onClick={this.increase} />
+        <Button disable={min >= counter-step} name="Decrease" onClick={this.decrease} />
+        <Button disable={!counter} name="Reset" onClick={this.reset} />
+       
 
         {/* <Increase
           click={() => {
