@@ -1,0 +1,9 @@
+.Count {
+  border: 2px solid black;
+  width: 400px;
+  margin: auto;
+  border-radius: 30%;
+  font-size: 25px;
+  color: orange;
+  text-shadow: 1px 2px 2px black;
+}

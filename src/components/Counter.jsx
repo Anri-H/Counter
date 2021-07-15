@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./Buttons/Button";
 import Input from "./Inputs/Inputs";
+import style from "./Counter.module.css"
 
 export default class Counter extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ export default class Counter extends React.Component {
         <Input placeholder="Enter minimal value" value={min} onChange={this.minVal}/>
         <Input placeholder="Step" value={step} onChange={this.step}/>
 
-        <p>{counter}</p>
+        <p className={style.Count}>{counter}</p>
         <Button disable={max <= counter+step} name="Increase" onClick={this.increase} />
         <Button disable={min >= counter-step} name="Decrease" onClick={this.decrease} />
         <Button disable={!counter} name="Reset" onClick={this.reset} />
